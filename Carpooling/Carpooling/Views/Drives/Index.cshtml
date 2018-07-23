@@ -1,7 +1,13 @@
-﻿
+﻿@using Carpooling.Models.View
+@model List<ShowDrivesViewModel>
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>Resor</h2>
 
+@foreach (var d in Model)
+{
+    <h3>@d.StartingPoint --> @d.Destination, @d.Date </h3>
+    <p>Förare: @d.Driver,  Antal lediga platser i bilen: @d.Passengers</p>
+}

@@ -18,7 +18,8 @@ namespace Carpooling.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            List<ShowDrivesViewModel> drives = ShowDrivesViewModel.GetDrivesListFromDataBase(context);
+            return View(drives);
         }
 
         [HttpGet]
@@ -49,6 +50,23 @@ namespace Carpooling.Controllers
             {
                 return Join(0);
             }
+        }
+        [HttpGet]
+        public IActionResult AddDrive()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AddDrive(AddDriveViewModel drive)
+        {
+            bool correctModel = TryValidateModel(drive);
+            if (correctModel)
+            {
+                AddDriveViewModel.AddDrive(context, drive);
+                return RedirectToAction("AddDrive");
+            }
+            else
+                return View();
         }
     }
 }

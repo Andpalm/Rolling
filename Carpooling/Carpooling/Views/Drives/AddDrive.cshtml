@@ -1,0 +1,30 @@
+﻿@using Carpooling.Models.View
+@model AddDriveViewModel
+@{
+    ViewData["Title"] = "Add Drive";
+}
+
+<h2>Add Drive</h2>
+
+<form asp-action="AddDrive" asp-controller="Drives">
+    <label asp-for="StartingPoint">Startpunkt</label>
+    <input asp-for="StartingPoint" class="form-control" placeholder="Ange startpunkt" />
+    <span asp-validation-for="StartingPoint" class="text-danger"></span>
+    <p></p>
+    <label asp-for="Destination">Slutdestination</label>
+    <input asp-for="Destination" class="form-control" placeholder="Ange slutdestination" />
+    <span asp-validation-for="Destination" class="text-danger"></span>
+    <p></p>
+    <label asp-for="Date">Datum</label>
+    <input asp-for="Date" class="form-control" placeholder="Ange datum för samåkning" />
+    <span asp-validation-for="Date" class="text-danger"></span>
+    <p></p>
+    <label asp-for="Driver">Är du förare</label>
+    <input asp-for="Driver" class="form-control" placeholder="Ange om det är du som kommer köra bilen" />
+    <span asp-validation-for="Driver" class="text-danger"></span>
+    <p></p>
+    <label asp-for="Passengers">Lediga platser i bilen</label>
+    <input asp-for="Passengers" class="form-control" placeholder="Ange antal lediga platser i bilen" />
+    <span asp-validation-for="Passengers" class="text-danger"></span>
+    <input type="submit" />
+</form>
