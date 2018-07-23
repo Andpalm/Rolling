@@ -31,12 +31,24 @@ namespace Carpooling.Controllers
         [HttpPost]
         public IActionResult Join(JoinViewModel person)
         {
-            if (JoinViewModel.IsNotAMember(context, person))
+            try
             {
-                return RedirectToAction("Join", new { id = 2 });
+                if (ModelState.IsValid)
+                {
+
+                    if (JoinViewModel.IsNotAMember(context, person))
+                    {
+                        return RedirectToAction("Join", new { id = 2 });
+                    }
+                    else
+                        return RedirectToAction("Join", new { id = 1 });
+                }
+                return Join(0);
             }
-            else
-                return RedirectToAction("Join", new { id = 1 });
+            catch
+            {
+                return Join(0);
+            }
         }
     }
 }

@@ -23,11 +23,12 @@
 }
 
 <form asp-action="Join" asp-controller="Drives">
-    <label asp-for="SSN">Personnummer</label>
-    <input asp-for="SSN" />
-    <label asp-for="FirstName">Förnamn</label>
-    <input asp-for="FirstName" />
-    <label asp-for="LastName">Efternamn</label>
-    <input asp-for="LastName" />
-    <input type="submit"/>
+   <label asp-for="SSN"></label>
+   <input asp-for="SSN" />
+   <label asp-for="FirstName"></label>
+   <input asp-for="FirstName" />
+   <label asp-for="LastName"></label>
+   <input asp-for="LastName" />
+   <input type="submit"/>
+    <div asp-validation-summary="All"></div>
 </form>
