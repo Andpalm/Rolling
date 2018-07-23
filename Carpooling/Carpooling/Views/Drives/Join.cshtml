@@ -1,7 +1,33 @@
-﻿
+﻿@using Carpooling.Models.View
+@model JoinViewModel
 @{
     ViewData["Title"] = "Join";
 }
 
 <h2>Join</h2>
+@{
+    switch (Model.ID)
+    {
+        case 0:
+            <p>Skriv in dina uppgifter nedan för att bli en del av samåkningsgruppen!</p>
+            break;
+        case 1:
+            <p>En person med det personnumret finns redan med i samåkninsgruppen</p>
+            break;
+        case 2:
+            <p>Välkommen till samåkningsgruppen</p>
+            break;
+        default:
+            break;
+    }
+}
 
+<form asp-action="Join" asp-controller="Drives">
+    <label asp-for="SSN">Personnummer</label>
+    <input asp-for="SSN" />
+    <label asp-for="FirstName">Förnamn</label>
+    <input asp-for="FirstName" />
+    <label asp-for="LastName">Efternamn</label>
+    <input asp-for="LastName" />
+    <input type="submit"/>
+</form>

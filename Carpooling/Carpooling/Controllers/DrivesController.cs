@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Carpooling.Models.Data;
+using Carpooling.Models.View;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Carpooling.Controllers
@@ -20,9 +21,22 @@ namespace Carpooling.Controllers
             return View();
         }
 
-        public IActionResult Join()
+        [HttpGet]
+        public IActionResult Join(int id)
         {
-            return View();
+            var person = new JoinViewModel() { ID = id };
+            return View(person);
+        }
+
+        [HttpPost]
+        public IActionResult Join(JoinViewModel person)
+        {
+            if (JoinViewModel.IsNotAMember(context, person))
+            {
+                return RedirectToAction("Join", new { id = 2 });
+            }
+            else
+                return RedirectToAction("Join", new { id = 1 });
         }
     }
 }
