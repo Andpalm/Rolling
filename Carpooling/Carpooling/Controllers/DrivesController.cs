@@ -62,11 +62,22 @@ namespace Carpooling.Controllers
             bool correctModel = TryValidateModel(drive);
             if (correctModel)
             {
-                AddDriveViewModel.AddDrive(context, drive);
-                return RedirectToAction("AddDrive");
+                bool SSNExists = AddDriveViewModel.SSNInDB(context, drive);
+                if (SSNExists)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewData["Message"] = "Ditt personnummer finns inte har du registrerat dig?";
+                    return View();
+                }
             }
             else
+            {
+                ViewData["Message"] = "Alla textrutor var inte korrekt ifyllda";
                 return View();
-        }
+            }
+        }  
     }
 }
