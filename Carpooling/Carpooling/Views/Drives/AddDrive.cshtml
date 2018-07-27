@@ -1,7 +1,7 @@
 ﻿@using Carpooling.Models.View
 @model AddDriveViewModel
 @{
-    ViewData["Title"] = "Add Drive";
+    ViewData["Title"] = "Lägg till resa";
 }
 
 <h2>Add Drive</h2>
@@ -31,4 +31,5 @@
     <span asp-validation-for="Passengers" class="text-danger"></span>
     <input type="submit" />
 </form>
+
 <h3>@ViewData["Message"]</h3>

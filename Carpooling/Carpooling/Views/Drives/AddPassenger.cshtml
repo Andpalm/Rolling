@@ -1,0 +1,17 @@
+﻿@using Carpooling.Models.View
+@model AddPassengerViewModel
+@{
+    ViewData["Title"] = "Anmäl dig som medpassagerare";
+}
+
+<h2>AddPassenger</h2>
+
+<h3>@Model.StartingPoint --> @Model.Destination, @Model.Date</h3>
+<p>Förare: @Model.Driver,  Antal lediga platser i bilen: @Model.Passengers</p>
+
+<form method="POST">
+    <label for="ssn">Ange ditt personnummer</label>
+    <input type="text" id="ssn" name="ssn" />
+    <input type="submit" />
+</form>
+@ViewData["Message"]

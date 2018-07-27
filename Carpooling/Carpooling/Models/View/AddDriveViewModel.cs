@@ -19,8 +19,7 @@ namespace Carpooling.Models.View
         [Required(ErrorMessage = "Du måste ange en slutdestination")]
         [Display(Name = "Slutdestination")]
         public string Destination { get; set; }
-
-
+        
         [Required(ErrorMessage = "Du måste ange vilket datum samåkningen sker")]
         [Display(Name = "Datum för resa")]
         public DateTime Date { get; set; }
@@ -40,6 +39,7 @@ namespace Carpooling.Models.View
 
         internal static int AddDrive(TrinityContext context, AddDriveViewModel drive)
         {
+
             Drives newDrive = new Drives()
             { StartingPoint = drive.StartingPoint, Destination = drive.Destination, Date = drive.Date, Driver = drive.Driver, Passengers = drive.Passengers };
 

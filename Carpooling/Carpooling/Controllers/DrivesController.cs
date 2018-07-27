@@ -18,8 +18,18 @@ namespace Carpooling.Controllers
         }
         public IActionResult Index()
         {
-            List<ShowDrivesViewModel> drives = ShowDrivesViewModel.GetDrivesListFromDataBase(context);
-            return View(drives);
+            try
+            {
+                List<IndexViewModel> drives = IndexViewModel.GetDrivesListFromDataBase(context);
+                return View(drives);
+            }
+            catch
+            {
+                ViewData["Message"] = "Det finns inga registrerade resor";
+                return View();
+            }
+
+
         }
 
         [HttpGet]
@@ -78,6 +88,40 @@ namespace Carpooling.Controllers
                 ViewData["Message"] = "Alla textrutor var inte korrekt ifyllda";
                 return View();
             }
-        }  
+        }
+        [HttpGet]
+        public IActionResult AddPassenger(int id)
+        {
+            AddPassengerViewModel drive = AddPassengerViewModel.FindDrive(context, id);
+            return View(drive);
+        }
+
+        [HttpPost]
+        public IActionResult AddPassenger(string ssn, AddPassengerViewModel drive)
+        {
+            bool SSNExists = AddPassengerViewModel.SSNInDB(context, ssn);
+            if (SSNExists)
+            {
+                bool PassengerNotInRide = AddPassengerViewModel.passengerAlreadyInRide(context, ssn, drive);
+                if (PassengerNotInRide)
+                {
+                    AddPassengerViewModel updatedDrive = AddPassengerViewModel.AddConnectionInPTD(context, drive, ssn);
+                    ViewData["Message"] = "Du är inbokad på resan!";
+                    return View(updatedDrive);
+                }
+                else
+                {
+                    ViewData["Message"] = "Du är redan inbokad på den här resan.";
+                    AddPassengerViewModel selectedDrive = AddPassengerViewModel.ReturnDrive(context, drive);
+                    return View(selectedDrive);
+                }
+            }
+            else
+            {
+                ViewData["Message"] = "Ditt personnummer finns inte har du registrerat dig?";
+                AddPassengerViewModel selectedDrive = AddPassengerViewModel.ReturnDrive(context, drive);
+                return View(selectedDrive);
+            }
+        }
     }
 }
