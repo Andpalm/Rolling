@@ -28,8 +28,6 @@ namespace Carpooling.Controllers
                 ViewData["Message"] = "Det finns inga registrerade resor";
                 return View();
             }
-
-
         }
 
         [HttpGet]
@@ -49,10 +47,10 @@ namespace Carpooling.Controllers
 
                     if (JoinViewModel.IsNotAMember(context, person))
                     {
-                        return RedirectToAction("Join", new { id = 2 });
+                        return Join(2);
                     }
                     else
-                        return RedirectToAction("Join", new { id = 1 });
+                        return Join(1);
                 }
                 return Join(0);
             }
@@ -61,11 +59,13 @@ namespace Carpooling.Controllers
                 return Join(0);
             }
         }
+
         [HttpGet]
         public IActionResult AddDrive()
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult AddDrive(AddDriveViewModel drive)
         {
@@ -89,6 +89,7 @@ namespace Carpooling.Controllers
                 return View();
             }
         }
+
         [HttpGet]
         public IActionResult AddPassenger(int id)
         {
@@ -122,6 +123,30 @@ namespace Carpooling.Controllers
                 AddPassengerViewModel selectedDrive = AddPassengerViewModel.ReturnDrive(context, drive);
                 return View(selectedDrive);
             }
+        }
+
+        [HttpGet]
+        public IActionResult MyDrives()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult MyDrives(string ssn)
+        {
+            if (ssn != null)
+            {
+                List<MyDrivesViewModel> myDrives = MyDrivesViewModel.GetPersonsDrives(context, ssn);
+                if (myDrives != null)
+                    return View(myDrives);
+                else
+                {
+                    ViewData["Message"] = "Det fanns inga körningar registrerade på det angivna personnumret!";
+                    return View();
+                }
+            }
+            else
+                return View();
         }
     }
 }

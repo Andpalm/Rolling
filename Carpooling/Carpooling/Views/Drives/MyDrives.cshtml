@@ -1,0 +1,27 @@
+﻿@using Carpooling.Models.View
+@model List<MyDrivesViewModel>
+
+@{
+    ViewData["Title"] = "MyDrives";
+}
+
+<h2>Mina turer</h2>
+<form method="POST">
+    <label for="ssn">Ange ditt personnummer(yyyymmdd-xxxx)</label>
+    <input type="text" id="ssn" name="ssn" />
+    <input type="submit" />
+</form>
+
+@ViewData["Message"]
+
+@{
+    if (Model != null)
+    {
+        @foreach (var d in Model)
+        {
+            <hr/>
+            <h3>@d.StartingPoint --> @d.Destination, @d.Date</h3>
+            <p>Antal lediga platser i bilen: @d.Passengers</p>
+        }
+    }
+}
