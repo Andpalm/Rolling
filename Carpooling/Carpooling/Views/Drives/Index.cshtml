@@ -9,6 +9,6 @@
 @foreach (var d in Model)
 {
     <h3><a href="@Url.Action("AddPassenger","Drives", new { id = @d.ID})">@d.StartingPoint --> @d.Destination, @d.Date</a></h3>
-    <p>Förare: @d.Driver,  Antal lediga platser i bilen: @d.Passengers</p>
+    <p>Antal lediga platser i bilen: @d.Passengers</p>
 }
 @ViewData["Message"]

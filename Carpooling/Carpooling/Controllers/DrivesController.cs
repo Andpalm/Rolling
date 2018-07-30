@@ -130,5 +130,11 @@ namespace Carpooling.Controllers
                 return View(currentDrive);
             }
         }
+        [HttpGet]
+        public IActionResult ShowPassengers(int id)
+        {
+            List<ShowPassengersViewModel> passengers = ShowPassengersViewModel.ListPassengers(context, id);
+            return View(passengers);
+        }
     }
 }

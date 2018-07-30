@@ -19,13 +19,11 @@ namespace Carpooling.Models.View
         [Required(ErrorMessage = "Du måste ange en slutdestination")]
         [Display(Name = "Slutdestination")]
         public string Destination { get; set; }
-        
+
         [Required(ErrorMessage = "Du måste ange vilket datum samåkningen sker")]
-        [Display(Name = "Datum för resa")]
+        [Display(Name = "Datum")]
         public DateTime Date { get; set; }
 
-        [Required(ErrorMessage = "Du måste ange om du är förare för samåkningen")]
-        [Display(Name = "Är du förare")]
         public bool Driver { get; set; }
 
         [Range(1, 50, ErrorMessage = "Du måste ange hur många lediga platser som finns i bilen")]
@@ -41,7 +39,7 @@ namespace Carpooling.Models.View
         {
 
             Drives newDrive = new Drives()
-            { StartingPoint = drive.StartingPoint, Destination = drive.Destination, Date = drive.Date, Driver = drive.Driver, Passengers = drive.Passengers };
+            { StartingPoint = drive.StartingPoint, Destination = drive.Destination, Date = drive.Date, Driver = true, Passengers = drive.Passengers };
 
             context.Drives.Add(newDrive);
             context.SaveChanges();
@@ -59,7 +57,7 @@ namespace Carpooling.Models.View
             {
                 int did = AddDrive(context, drive);
                 var person = context.Persons.Where(p => p.SSN == drive.SSN).FirstOrDefault();
-             
+
                 context.PTD.Add(new PTD() { PID = person.ID, DID = did });
                 context.SaveChanges();
                 return true;
