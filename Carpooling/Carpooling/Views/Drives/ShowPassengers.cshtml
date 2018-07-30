@@ -1,0 +1,14 @@
+﻿@using  Carpooling.Models.View
+@model List<ShowPassengersViewModel>
+@{
+    ViewData["Title"] = "ShowPassengers";
+}
+
+<h2>Passagerare</h2>
+
+<H3>@Model[0].FirstName @Model[0].LastName (Förare)</H3>
+
+@for (int i = 1; i < Model.Count; i++)
+{
+    <p>@Model[i].FirstName @Model[i].LastName</p>
+}

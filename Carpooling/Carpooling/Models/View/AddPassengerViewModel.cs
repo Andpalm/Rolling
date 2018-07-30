@@ -15,7 +15,7 @@ namespace Carpooling.Models.View
         public string Destination { get; set; }
         public DateTime Date { get; set; }
         public bool Driver { get; set; }
-        [Range(0, 50, ErrorMessage = "Du måste ange hur många lediga platser som finns i bilen")]
+        [Range(0, 50)]
         public int Passengers { get; set; }
 
         [Display(Name = "Personnummer(ååååmmdd-xxxx): ")]
@@ -77,9 +77,9 @@ namespace Carpooling.Models.View
         internal static AddPassengerViewModel ReturnDrive (TrinityContext context, AddPassengerViewModel drive)
         {
             var ride = context.Drives.Where(r => r.ID == drive.ID).FirstOrDefault();
-            AddPassengerViewModel selectedDrive = new AddPassengerViewModel()
+            AddPassengerViewModel currentDrive = new AddPassengerViewModel()
             { ID = ride.ID, Date = ride.Date, StartingPoint = ride.StartingPoint, Destination = ride.Destination, Driver = ride.Driver, Passengers = ride.Passengers };
-            return selectedDrive;
+            return currentDrive;
         }
 
     }
