@@ -99,28 +99,35 @@ namespace Carpooling.Controllers
         [HttpPost]
         public IActionResult AddPassenger(string ssn, AddPassengerViewModel drive)
         {
+            AddPassengerViewModel currentDrive = AddPassengerViewModel.ReturnDrive(context, drive);
             bool SSNExists = AddPassengerViewModel.SSNInDB(context, ssn);
             if (SSNExists)
             {
                 bool PassengerNotInRide = AddPassengerViewModel.passengerAlreadyInRide(context, ssn, drive);
                 if (PassengerNotInRide)
                 {
-                    AddPassengerViewModel updatedDrive = AddPassengerViewModel.AddConnectionInPTD(context, drive, ssn);
-                    ViewData["Message"] = "Du är inbokad på resan!";
-                    return View(updatedDrive);
+                    if (currentDrive.Passengers > 0)
+                    {
+                        AddPassengerViewModel updatedDrive = AddPassengerViewModel.AddConnectionInPTD(context, drive, ssn);
+                        ViewData["Message"] = "Du är inbokad på resan!";
+                        return View(updatedDrive);
+                    }
+                    else
+                    {
+                        ViewData["Message"] = "Bilen är redan full.";
+                        return View(currentDrive);
+                    }
                 }
                 else
                 {
                     ViewData["Message"] = "Du är redan inbokad på den här resan.";
-                    AddPassengerViewModel selectedDrive = AddPassengerViewModel.ReturnDrive(context, drive);
-                    return View(selectedDrive);
+                    return View(currentDrive);
                 }
             }
             else
             {
                 ViewData["Message"] = "Ditt personnummer finns inte har du registrerat dig?";
-                AddPassengerViewModel selectedDrive = AddPassengerViewModel.ReturnDrive(context, drive);
-                return View(selectedDrive);
+                return View(currentDrive);
             }
         }
     }
