@@ -131,19 +131,22 @@ namespace Carpooling.Controllers
                 return View(currentDrive);
             }
         }
+
         [HttpGet]
         public IActionResult ShowPassengers(int id)
         {
             List<ShowPassengersViewModel> passengers = ShowPassengersViewModel.ListPassengers(context, id);
             return View(passengers);
-                AddPassengerViewModel selectedDrive = AddPassengerViewModel.ReturnDrive(context, drive);
-                return View(selectedDrive);
-            }
         }
 
         [HttpGet]
-        public IActionResult MyDrives()
+        public IActionResult MyDrives(int id)
         {
+            if (id == 1)
+            {
+                ViewData["Message"] = "Du är borttagen från turen!";
+                return View();
+            }
             return View();
         }
 
@@ -153,16 +156,23 @@ namespace Carpooling.Controllers
             if (ssn != null)
             {
                 List<MyDrivesViewModel> myDrives = MyDrivesViewModel.GetPersonsDrives(context, ssn);
-                if (myDrives != null)
+                if (myDrives.Count != 0)
                     return View(myDrives);
                 else
                 {
-                    ViewData["Message"] = "Det fanns inga körningar registrerade på det angivna personnumret!";
+                    ViewData["Message"] = "Personen med det angivna personnumret finns inte med i några turer!";
                     return View();
                 }
             }
             else
                 return View();
+        }
+
+        [HttpGet]
+        public IActionResult RemoveTraveller(MyDrivesViewModel drive)
+        {
+            MyDrivesViewModel.RemoveTraveller(drive, context);
+            return RedirectToAction("MyDrives", new { id = 1 });
         }
     }
 }
