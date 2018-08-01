@@ -17,11 +17,16 @@
 @{
     if (Model != null)
     {
+        <h2>@Model[0].FirstName @Model[0].LastName</h2>
         @foreach (var d in Model)
         {
-            <hr/>
+            <hr />
             <h3>@d.StartingPoint --> @d.Destination, @d.Date</h3>
             <p>Antal lediga platser i bilen: @d.Passengers</p>
+            <div class="btn-group">
+                <button type="button" onclick="location.href='@Url.Action("ShowPassengers","Drives", new { id = @d.ID } )'" class="btn btn-primary">Personer i bilen</button>
+                <button type="button" onclick="location.href='@Url.Action("RemoveTraveller","Drives", @d )'" class="btn btn-primary">Hoppa av</button>
+            </div>
         }
     }
 }
