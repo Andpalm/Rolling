@@ -135,12 +135,9 @@ namespace Carpooling.Controllers
         public IActionResult ShowPassengers(int id)
         {
             List<ShowPassengersViewModel> passengers = ShowPassengersViewModel.ListPassengers(context, id);
-            return View(passengers);
-                AddPassengerViewModel selectedDrive = AddPassengerViewModel.ReturnDrive(context, drive);
-                return View(selectedDrive);
-            }
+            return View(passengers);            
         }
-
+     
         [HttpGet]
         public IActionResult MyDrives()
         {
