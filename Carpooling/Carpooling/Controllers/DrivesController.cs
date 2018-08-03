@@ -16,6 +16,7 @@ namespace Carpooling.Controllers
         {
             this.context = context;
         }
+        [HttpGet]
         public IActionResult Index()
         {
             try
@@ -27,6 +28,27 @@ namespace Carpooling.Controllers
             {
                 ViewData["Message"] = "Det finns inga registrerade resor";
                 return View();
+            }
+        }
+        [HttpPost]
+        public IActionResult Index(string searchStart, string searchDestination)
+        {
+            List<IndexViewModel> drives = IndexViewModel.GetDrivesListFromDataBase(context);
+            if (searchStart != null && searchDestination != null)
+            {
+                List<IndexViewModel> specificDrives = IndexViewModel.GetSpecificDrivesFromDB(context, searchStart, searchDestination);
+                if (specificDrives.Count != 0)
+                    return View(specificDrives);
+                else
+                {
+                    ViewData["Message"] = "Det fanns inga resor som matchade din sökning!";
+                    return View(drives);
+                }
+            }
+            else
+            {
+                ViewData["Message"] = "Du måste fylla i både startpunkt och destination!";
+                return View(drives);
             }
         }
 

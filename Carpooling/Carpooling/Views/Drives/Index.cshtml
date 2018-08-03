@@ -6,9 +6,18 @@
 
 <h2>Resor</h2>
 
+<h4>Sök efter en specifik resa</h4>
+
+<form method="POST">
+    <label for="searchStart">Startpunkt</label>
+    <input type="text" id="searchStart" name="searchStart" />
+    <label for="searchDestination">Slutdestination</label>
+    <input type="text" id="searchDestination" name="searchDestination" />
+    <input type="submit" />
+</form>
+@ViewData["Message"]
 @foreach (var d in Model)
 {
     <h3><a href="@Url.Action("AddPassenger","Drives", new { id = @d.ID})">@d.StartingPoint --> @d.Destination, @d.Date</a></h3>
     <p>Antal lediga platser i bilen: @d.Passengers</p>
 }
-@ViewData["Message"]
